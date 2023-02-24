@@ -8,26 +8,24 @@
  *
  */
 
+function freqCounter(str) {
+  const counter = {};
+  for (const letter of str) {
+    const current = counter[letter] || 0;
+    counter[letter] = current + 1;
+  }
+  return counter;
+}
+
 
 function canConstructWord(word, letters) {
-  const wordFreq = {};
-  const letterFreq = {};
+  const wordLetterFreq = freqCounter(word);
+  const lettersLetterFreq = freqCounter(letters);
 
-  for (const letter of word) {
-    const current = wordFreq[letter] || 0;
-    wordFreq[letter] = current + 1;
-  }
-
-  for (const item of letters) {
-    const current = letterFreq[item] || 0;
-    letterFreq[item] = current + 1;
-  }
-
-  console.log('letterFreq', letterFreq);
-  console.log('wordFreq', wordFreq);
-
-  for (const letter in wordFreq) {
-    if (letterFreq[letter] === undefined || wordFreq[letter] > letterFreq[letter]) return false;
+  for (const letter in wordLetterFreq) {
+    const currWordCnt = wordLetterFreq[letter];
+    const currLttrCnt = lettersLetterFreq[letter];
+    if (currLttrCnt === undefined || currWordCnt > currLttrCnt) return false;
   }
 
   return true;
